@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ecdysiz - Favicon Generator</title>
+  <link rel="stylesheet" href="index.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Favicon Generator by <span class="highlight">Ecdysiz</span></h1>
+            <p>Create professional favicons from images, text, or emojis for your website</p>
+        </div>
+      
+        <div class="tool-container">
+            <div class="tabs">
+                <button class="tab active" data-tab="image-tab">
+                    <span class="tab-icon">🖼️</span> Image to Favicon
+                </button>
+                <button class="tab" data-tab="text-tab">
+                    <span class="tab-icon">📝</span> Text to Favicon
+                </button>
+                <button class="tab" data-tab="emoji-tab">
+                    <span class="tab-icon">😊</span> Emoji to Favicon
+                </button>
+            </div>
+            
+            <div id="image-tab" class="tab-content active">
+                <form id="imageForm">
+                    <div class="form-group">
+                        <label for="imageUpload">Upload Image</label>
+                        <div class="file-input-container">
+                            <div class="file-input-button">Choose Image File</div>
+                            <input type="file" id="imageUpload" accept="image/*" required>
+                        </div>
+                        <div class="file-name" id="imageFileName">No file chosen</div>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h4>Advanced Settings</h4>
+                        <div class="settings-grid">
+                            <div class="settings-item">
+                                <input type="checkbox" id="imageTransparent" checked>
+                                <label for="imageTransparent">Transparent Background</label>
+                            </div>
+                            <div class="settings-item">
+                                <input type="checkbox" id="imageRoundCorners">
+                                <label for="imageRoundCorners">Round Corners</label>
+                            </div>
+                            <div class="settings-item">
+                                <input type="checkbox" id="imageCrop" checked>
+                                <label for="imageCrop">Auto Crop</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Size Options</label>
+                        <div class="size-options">
+                            <div class="size-option">
+                                <input type="checkbox" id="size16" checked>
+                                <label for="size16">16x16</label>
+                            </div>
+                            <div class="size-option">
+                                <input type="checkbox" id="size32" checked>
+                                <label for="size32">32x32</label>
+                            </div>
+                            <div class="size-option">
+                                <input type="checkbox" id="size48" checked>
+                                <label for="size48">48x48</label>
+                            </div>
+                            <div class="size-option">
+                                <input type="checkbox" id="size64" checked>
+                                <label for="size64">64x64</label>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="btn-container">
+                        <button type="button" class="btn" id="generateImageFaviconBtn">GENERATE FAVICON</button>
+                    </div>
+                </form>
+            </div>
+            
+            <div id="text-tab" class="tab-content">
+                <form id="textForm">
+                    <div class="form-group">
+                        <label for="faviconText">Text for Favicon</label>
+                        <input type="text" id="faviconText" placeholder="Enter 1-2 characters" maxlength="2" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="textColor">Text Color</label>
+                        <div class="color-picker-container">
+                            <input type="color" id="textColorPicker" value="#FFFFFF">
+                            <input type="text" id="textColor" value="#FFFFFF" placeholder="Color HEX code">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="backgroundColor">Background Color</label>
+                        <div class="color-picker-container">
+                            <input type="color" id="bgColorPicker" value="#00bfb3">
+                            <input type="text" id="backgroundColor" value="#00bfb3" placeholder="Color HEX code">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="fontSize">Font Size</label>
+                        <select id="fontSize">
+                            <option value="small">Small</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="large">Large</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="fontStyle">Font Style</label>
+                        <select id="fontStyle">
+                            <option value="sans-serif" selected>Sans Serif</option>
+                            <option value="serif">Serif</option>
+                            <option value="monospace">Monospace</option>
+                            <option value="fantasy">Fantasy</option>
+                        </select>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h4>Advanced Settings</h4>
+                        <div class="settings-grid">
+                            <div class="settings-item">
+                                <input type="checkbox" id="textBold" checked>
+                                <label for="textBold">Bold Text</label>
+                            </div>
+                            <div class="settings-item">
+                                <input type="checkbox" id="textRoundCorners" checked>
+                                <label for="textRoundCorners">Round Corners</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="btn-container">
+                        <button type="button" class="btn" id="generateTextFaviconBtn">GENERATE FAVICON</button>
+                    </div>
+                </form>
+            </div>
+            
+            <div id="emoji-tab" class="tab-content">
+                <form id="emojiForm">
+                    <div class="form-group">
+                        <label for="emojiSearch">Search Emoji</label>
+                        <input type="text" id="emojiSearch" placeholder="Search for emoji...">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Select Emoji</label>
+                        <div class="emoji-grid" id="emojiGrid">
+                            <!-- Emojis will be loaded here -->
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="selectedEmoji">Selected Emoji</label>
+                        <input type="text" id="selectedEmoji" placeholder="Click an emoji above" readonly required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="emojiBgColor">Background Color</label>
+                        <div class="color-picker-container">
+                            <input type="color" id="emojiBgColorPicker" value="#ffffff">
+                            <input type="text" id="emojiBgColor" value="#ffffff" placeholder="Color HEX code">
+                        </div>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h4>Advanced Settings</h4>
+                        <div class="settings-grid">
+                            <div class="settings-item">
+                                <input type="checkbox" id="emojiTransparent" checked>
+                                <label for="emojiTransparent">Transparent Background</label>
+                            </div>
+                            <div class="settings-item">
+                                <input type="checkbox" id="emojiRoundCorners">
+                                <label for="emojiRoundCorners">Round Corners</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="btn-container">
+                        <button type="button" class="btn" id="generateEmojiFaviconBtn">GENERATE FAVICON</button>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="loading" id="loading"></div>
+            
+            <div class="result-container" id="resultContainer">
+                <h3>Your Favicon is Ready!</h3>
+                <p>Preview your favicon in different sizes:</p>
+                
+                <div class="favicon-preview">
+                    <div class="preview-item">
+                        <h5>16x16</h5>
+                        <div class="preview-img">
+                            <img id="preview16" src="" alt="16x16 favicon">
+                        </div>
+                    </div>
+                    <div class="preview-item">
+                        <h5>32x32</h5>
+                        <div class="preview-img">
+                            <img id="preview32" src="" alt="32x32 favicon">
+                        </div>
+                    </div>
+                    <div class="preview-item">
+                        <h5>48x48</h5>
+                        <div class="preview-img">
+                            <img id="preview48" src="" alt="48x48 favicon">
+                        </div>
+                    </div>
+                    <div class="preview-item">
+                        <h5>64x64</h5>
+                        <div class="preview-img">
+                            <img id="preview64" src="" alt="64x64 favicon">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="settings-section">
+                    <h4>Download Options</h4>
+                    <div class="download-options">
+                        <a href="#" class="download-btn" id="downloadICO">Download ICO</a>
+                        <a href="#" class="download-btn" id="downloadPNG">Download PNG</a>
+                        <a href="#" class="download-btn" id="downloadFaviconZip">Download All Sizes</a>
+                        <small style="color: var(--light-text); opacity: 0.7; margin: 0 10px;">(Note: This is a PNG file named as .ico; convert it for true ICO format if needed)</small>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="htmlCode">HTML Code for Your Website</label>
+                    <textarea id="htmlCode" rows="4" readonly></textarea>
+                </div>
+                
+                <div class="btn-container">
+                    <button type="button" class="btn btn-secondary" id="copyHtmlBtn">COPY HTML CODE</button>
+                    <button type="button" class="btn" id="createNewFaviconBtn">CREATE NEW FAVICON</button>
+                </div>
+            </div>
+        </div>
+      </div>
+
+      <script src="index.js"></script>
+</body>
+</html>
